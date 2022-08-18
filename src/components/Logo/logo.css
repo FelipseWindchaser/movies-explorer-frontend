@@ -1,0 +1,7 @@
+.logo__image {
+  display: flex;
+  max-width: 38px;
+  max-height: 38px;
+  padding: 18px 0 18px 0;
+}
+

@@ -1,0 +1,29 @@
+.movies__button-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px 0 80px;
+}
+
+.movies__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #E8E8E8;
+  background: none;
+  border-radius: 6px;
+  padding: 0;
+  width: 320px;
+  height: 36px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+@media screen and (max-width: 560px) {
+  .movies__button {
+    width: 240px;
+  }
+  .movies__button-container {
+    padding: 50px 0 100px;
+  }
+}
