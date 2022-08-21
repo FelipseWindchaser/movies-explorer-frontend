@@ -7,6 +7,9 @@
   outline: 1.5px solid rgba(170, 170, 170, .2);
   border-radius: 8px;
 }
+.searchForm__form-container:focus-within {
+  outline: 2px solid rgba(170, 170, 170, .8);
+}
 .searchForm__input {
   width: 90%;
   border: none;
@@ -29,6 +32,10 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 18px;
+}
+.searchForm__button:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }
 @media screen and (max-width: 770px) {
   .searchForm {

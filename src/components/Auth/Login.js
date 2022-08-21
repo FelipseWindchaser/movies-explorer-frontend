@@ -13,7 +13,7 @@ function Login() {
         <input className="auth__form-input auth__form-input_bold" defaultValue={"pochta@yandex.ru"} type="email"></input>
         <label className="auth__form-label">Пароль</label>
         <input className="auth__form-input" type="password"></input>
-        <button className="auth__form-button auth__form-button_two-inputs" name="auth-button">Войти</button>
+        <button className="auth__form-button auth__form-button_two-inputs" name="auth-button" type="submit">Войти</button>
         <div className="auth__text-container">
           <p className="auth__text">Ещё не зарегистрированы?</p>
             <a className="auth__text auth__signup-link" href="/signup" rel="noopener">Регистрация</a>

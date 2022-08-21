@@ -7,20 +7,20 @@ function Portfolio() {
       <h2 className="portfolio__title">Портфолио</h2>
       <ul className="portfolio__list">
         <li className="portfolio__element">
-          <p className="portfolio__text">Статичный сайт</p>
-          <a className="portfolio__link" href="/" target="_blank" rel="noopener">
+          <a className="portfolio__link" href="https://github.com/FelipseWindchaser/how-to-learn" target="_blank" rel=" noreferrer noopener">
+            <p className="portfolio__text">Статичный сайт</p>
             <img className="portfolio_arrow-image" src={arrow} alt="Стрелка вверх"/>
           </a>
         </li>
         <li className="portfolio__element">
-          <p className="portfolio__text">Адаптивный сайт</p>
-          <a className="portfolio__link" href="/" target="_blank" rel="noopener">
+          <a className="portfolio__link" href="https://github.com/FelipseWindchaser/russian-travel" target="_blank" rel="noreferrer noopener">
+            <p className="portfolio__text">Адаптивный сайт</p>
             <img className="portfolio_arrow-image" src={arrow} alt="Стрелка вверх"/>
           </a>
         </li>
         <li className="portfolio__element">
-          <p className="portfolio__text">Одностраничное приложение</p>
-          <a className="portfolio__link" href="/" target="_blank" rel="noopener">
+          <a className="portfolio__link" href="https://github.com/FelipseWindchaser/react-mesto-auth" target="_blank" rel="noreferrer noopener">
+            <p className="portfolio__text">Одностраничное приложение</p>
             <img className="portfolio_arrow-image" src={arrow} alt="Стрелка вверх"/>
           </a>
         </li>

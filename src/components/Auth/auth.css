@@ -71,6 +71,10 @@
   line-height: 17px;
   color: #FFFFFF;
 }
+.auth__form-button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
 .auth__text-container {
   display: flex;
   flex-direction: row;
@@ -88,6 +92,9 @@
 .auth__signup-link {
   text-decoration: none;
   color: #2BE080;
+}
+.auth__signup-link:hover {
+  opacity: 0.5;
 }
 .auth__auth-fail {
   color: #EE3465;

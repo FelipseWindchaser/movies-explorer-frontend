@@ -44,7 +44,10 @@
   line-height: 11px;
   background: #F9F9F9;
 }
-
+.moviesCard__button:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}
 .moviesCard__button_active {
   background: #EE3465;
 }

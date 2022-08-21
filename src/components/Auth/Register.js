@@ -19,7 +19,7 @@ function Register({ isAuthorized = false}) {
           <span className="auth__form-error-message">Что-то пошло не так...</span>
         </fieldset>
         
-        <button className="auth__form-button" name="auth-button">Зарегистрироваться</button>
+        <button className="auth__form-button" name="auth-button" type="submit">Зарегистрироваться</button>
         <div className="auth__text-container">
           <p className="auth__text">Уже зарегистрированы?</p>
             <a className="auth__text auth__signup-link" href="/signin" rel="noopener">Войти</a>

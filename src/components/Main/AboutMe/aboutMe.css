@@ -64,6 +64,10 @@
   font-size: 14px;
   line-height: 17px;
 }
+.aboutMe__link:hover {
+  opacity: 0.8;
+}
+
 @media screen and (max-width: 1024px) {
   .aboutMe__full-description {
     padding-bottom: 87px;

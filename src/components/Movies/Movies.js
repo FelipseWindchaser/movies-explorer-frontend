@@ -13,7 +13,7 @@ function Movies() {
       <FilterCheckbox />
       <MoviesCardList Component={MoviesCard} moviesList={moviesList} />
       <div className="movies__button-container">
-        <button className="movies__button" name="movies-button">Ещё</button>
+        <button className="movies__button" name="movies-button" type="button">Ещё</button>
       </div>
     </section>
   );

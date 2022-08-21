@@ -12,7 +12,7 @@ function MoviesCard({ isSaved }) {
       <div className="moviesCard__image-container">
         <img className="moviesCard__image" src={movieImage} alt="Кадр из фильма"></img>
       </div>
-      <button className={`moviesCard__button ${isSaved ? "moviesCard__button_active" : "" }`} name="button">
+      <button className={`moviesCard__button ${isSaved ? "moviesCard__button_active" : "" }`} name="button" type="button">
         {isSaved ?
        <img className="moviesCard__button-image" src={buttonActive} alt="Активная кнопка"/>
       : "Сохранить" }

@@ -12,7 +12,7 @@ function SavedMoviesCard() {
       <div className="moviesCard__image-container">
         <img className="moviesCard__image" src={movieImage} alt="Кадр из фильма"></img>
       </div>
-      <button className="moviesCard__button" name="button">
+      <button className="moviesCard__button" name="button" type="button">
        <img className="moviesCard__button-image" src={buttonRemove} alt="Кнопка удаления"/>
       </button>
     </div>

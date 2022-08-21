@@ -19,8 +19,6 @@ padding: 0 70px 104px;
   gap: 20px;
 }
 .portfolio__element {
-  display: flex;
-  justify-content: space-between;
   padding-bottom: 20px;
 }
 
@@ -37,8 +35,18 @@ padding: 0 70px 104px;
 }
 .portfolio__link {
   display: flex;
-  align-self: center;
+  justify-content: space-between;
   margin-right: 7px;
+  text-decoration: none;
+  color: #000;
+}
+.portfolio__link:hover {
+  opacity: 0.8;
+}
+.portfolio_arrow-image {
+  width: 17px;
+  height: 17px;
+  align-self: center;
 }
 
 @media screen and (max-width: 770px) {
