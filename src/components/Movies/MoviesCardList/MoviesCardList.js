@@ -1,11 +1,15 @@
 import './moviesCardList.css';
+import MoviesCard from '../MoviesCard/MoviesCard';
 
-
-function MoviesCardList({ Component, moviesList }) {
+function MoviesCardList({ moviesList, errorMessage }) {
   return (
+    moviesList.length === 0
+      ? 
+      <p className="moviesCardList__error-message">{errorMessage ? errorMessage : 'Ничего не найдено'}</p>
+      :
     <section className="moviesCardList">
-      {moviesList.map((element, index) => {
-        return <Component key={index} isSaved={element.isSaved} />
+      {moviesList.map((element) => {
+        return <MoviesCard key={element.id} item={element} />
       })}
     </section>
   );

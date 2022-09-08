@@ -37,6 +37,10 @@
   opacity: 0.8;
   cursor: pointer;
 }
+/* .searchForm__error-message {
+  padding: 25px 25px;
+} */
+
 @media screen and (max-width: 770px) {
   .searchForm {
     padding: 70px 30px 27px;
