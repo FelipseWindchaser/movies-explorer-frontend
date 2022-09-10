@@ -3,14 +3,25 @@ import './auth.css'
 import validator  from 'validator';
 import { useState } from 'react';
 import { fetchPost } from '../../utils/MainApi';
+import { useNavigate } from 'react-router-dom';
 
-function Register({ inputLabelText, title, buttonText, confirmationText, linkText, errorMessage }) {
+function Register({ inputLabelText,
+  title,
+  buttonText,
+  confirmationText,
+  linkText,
+  errorMessage,
+  setIsLoggedIn,
+  setPopupTooltipContent
+}) {
   const [name, setName] = useState('Виталий');
   const [email, setEmail] = useState('pochta@yandex.ru');
   const [password, setPassword] = useState('');
   const [labelName, labelEmail, labelPassword] = inputLabelText;
   const isEmailValid = validator.isEmail(email);
   const isStrongPassword = validator.isLength(password, {min: 6, max: undefined});
+
+  const navigate = useNavigate();
 
   function handleNameChange(e) {
     setName(e.target.value)
@@ -24,8 +35,14 @@ function Register({ inputLabelText, title, buttonText, confirmationText, linkTex
   function handleSubmit(e) {
     e.preventDefault();
     fetchPost( {name, email, password }, 'signup')
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .then(() => {
+        setIsLoggedIn(true);
+        navigate('/movies')
+      })
+      .catch(err => setPopupTooltipContent({
+        isSuccessful: false,
+        message: err.message
+      }));
   }
   return (
     <section className="auth">

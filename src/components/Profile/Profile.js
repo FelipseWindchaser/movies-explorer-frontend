@@ -4,10 +4,19 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { fetchPatch } from '../../utils/MainApi';
 import './profile.css'
 
-function Profile({  nameLabel, emailLabel, editButtonText, logoutButtonText, setCurrentUser, onClickLogout }) {
+function Profile({  nameLabel, emailLabel, editButtonText, logoutButtonText, setCurrentUser, onClickLogout, setPopupTooltipContent }) {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState(currentUser.name);
   const [email, setEmail] = useState(currentUser.email);
+  const isDisabled = disableButton();
+
+  function disableButton() {
+    if (name !== currentUser.name || email !== currentUser.email) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   function handleNameChange(e) {
     setName(e.target.value);
@@ -17,9 +26,18 @@ function Profile({  nameLabel, emailLabel, editButtonText, logoutButtonText, set
   }
   function handleSubmit(e) {
     e.preventDefault();
-    fetchPatch( {name, email}, 'users/me')
-      .then(res => setCurrentUser(res))
-      .catch(err => console.log(err))
+      fetchPatch( {name, email}, 'users/me')
+      .then(res => {
+        setCurrentUser(res);
+        setPopupTooltipContent({
+          isSuccessful: true,
+          message: "Данные успешно обновлены"
+        })
+      })
+      .catch(err => setPopupTooltipContent({
+        isSuccessful: false,
+        message: err.message
+        }))
   }
 
   return (
@@ -42,7 +60,7 @@ function Profile({  nameLabel, emailLabel, editButtonText, logoutButtonText, set
             onChange={handleEmailChange}
           ></input>
         </fieldset>
-        <button className="profile__edit-button" name="submit-button" type="submit">{editButtonText}</button>
+        <button className="profile__edit-button" name="submit-button" type="submit" disabled={isDisabled}>{editButtonText}</button>
       </form>
       <Link to="/" className="profile__signout" onClick={onClickLogout}>{logoutButtonText}</Link>
     </section>

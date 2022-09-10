@@ -1,20 +1,10 @@
-export const moviesList = [
-  { isSaved : true },
-  { isSaved : true },
-  { isSaved : false },
-  { isSaved : false },
-  { isSaved : false },
-  { isSaved : true },
-  { isSaved : true },
-  { isSaved : false },
-  { isSaved : false },
-  { isSaved : false },
-  { isSaved : true },
-  { isSaved : false },
-];
-
-export const savedMoviesList = [
-  { isSaved : true },
-  { isSaved : true },
-  { isSaved : true },
-]
+const shortMovieDuration = 40;
+const minWidth = 700;
+const maxWidth = 1000;
+const gridMultiplier = 4;
+export { 
+  shortMovieDuration,
+  minWidth,
+  maxWidth,
+  gridMultiplier, 
+}

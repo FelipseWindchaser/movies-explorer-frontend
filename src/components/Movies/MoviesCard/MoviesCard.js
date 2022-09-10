@@ -4,7 +4,7 @@ import buttonActive from '../../../images/button-active.svg'
 import { SavedMovieContex } from '../../../contexts/SavedMovieContex';
 import { fetchDelete, fetchPost } from '../../../utils/MainApi';
 
-function MoviesCard({ item }) {
+function MoviesCard({ item, setPopupTooltipContent }) {
   const { savedMoviesList, setSavedMoviesList } = useContext(SavedMovieContex);
   const [isSaved, setIsSaved] = useState(
     savedMoviesList.some((movie) => movie.movieId === item.id)
@@ -34,10 +34,13 @@ function MoviesCard({ item }) {
         movieId: item.id, 
       }, 'movies')
         .then(res => {
-          setSavedMoviesList([...savedMoviesList, res])
+          setSavedMoviesList([res, ...savedMoviesList])
           setIsSaved(true)
         })
-      .catch((err) => console.log(err))
+      .catch((err) => setPopupTooltipContent({
+        isSuccessful: false,
+        message: "Что-то пошло не так (╯°□°）╯︵ ┻━┻"
+      }))
     }
   }
 

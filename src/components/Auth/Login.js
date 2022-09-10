@@ -5,7 +5,16 @@ import './auth.css'
 import validator  from 'validator';
 import { useNavigate } from "react-router-dom";
 
-function Login({ inputLabelText, title, buttonText, confirmationText, linkText, errorMessage, setIsLoggedIn }) {
+function Login({
+  inputLabelText,
+  title, 
+  buttonText, 
+  confirmationText, 
+  linkText, 
+  errorMessage, 
+  setIsLoggedIn, 
+  setPopupTooltipContent
+}) {
   const [labelEmail, labelPassword] = inputLabelText;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -22,12 +31,14 @@ function Login({ inputLabelText, title, buttonText, confirmationText, linkText, 
   async function handleSubmit(e) {
     e.preventDefault();
     fetchPost( { email, password }, 'signin')
-      .then(res => {
-        console.log(res)
+      .then(() => {
         setIsLoggedIn(true)
-        navigate("/")
+        navigate("/movies")
       })
-      .catch(err => console.log(err))
+      .catch(err => setPopupTooltipContent({
+        isSuccessful: false,
+        message: err.message
+      }))
   }
   return (
     <section className="auth">

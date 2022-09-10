@@ -5,25 +5,41 @@ import SearchForm from './SearchForm/SearchForm';
 import { useEffect, useState } from 'react';
 import { currentElementCount, handleFilterCheckbox, searchFilter, getGridCount } from './moviesUtils';
 import Preloader from '../Preloader/Preloader';
+import getBeatfilmMovies from '../../utils/MoviesApi';
 
-function Movies() {
+
+function Movies({ setPopupTooltipContent }) {
   const [moviesList, setMoviesList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isChecked, setIsChecked] = useState(true);
   const [elementCount, setElementCount] = useState(currentElementCount());
   const [movieSearch, setMovieSearch] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [currentMoviesList, setCurrentMoviesList] = useState([])
+  const showMoreActiveClassName = `${handleFilterCheckbox(currentMoviesList, isChecked).slice(elementCount).length !== 0 ? "movies__button movies__button_active" : "movies__button"}`
 
   let resizeTimeout = null;
 
-  useEffect(() => {    
+  useEffect(() => {
     window.addEventListener('resize', handleResize);
     const localStorageData = localStorage.getItem('movies');
     if (localStorageData) {
-      const { searchText, movies, filterCheckbox } = JSON.parse(localStorageData);
-      setMoviesList(movies);
+      const { searchText, movies, searchMoviesResult, filterCheckbox } = JSON.parse(localStorageData);
+      setCurrentMoviesList(searchMoviesResult);
+      setMoviesList(movies)
       setIsChecked(filterCheckbox);
       setMovieSearch(searchText);
+      setIsLoading(false)
+    } else {
+      getBeatfilmMovies()
+        .then((res) => {
+          setMoviesList(res)
+        })
+        .catch((err) => {
+          console.log(err)
+          setErrorMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+        })
+        .finally(() => setTimeout(() => setIsLoading(false), 300))
     }
     return () => window.removeEventListener('resize', handleResize);
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,19 +52,12 @@ function Movies() {
 
 
   function handleSearch(searchText) {
-    setIsLoading(true)
-    searchFilter(searchText)
-      .then(res => { 
-        setElementCount(currentElementCount)
-        setMoviesList(res)
-        localStorage.setItem('movies', JSON.stringify({ searchText, movies: res, filterCheckbox: isChecked }));
-        setErrorMessage('')
-      })
-      .catch(err => {
-        setErrorMessage('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
-        console.log(err)
-      })
-      .finally(() => setIsLoading(false))
+    const searchMoviesResult = moviesList.filter((movie) => movie.nameRU.toLowerCase().indexOf(searchText.toLowerCase()) > -1)
+    setCurrentMoviesList(searchMoviesResult)
+    localStorage.setItem('movies', JSON.stringify({ searchText, movies: moviesList, searchMoviesResult, filterCheckbox: isChecked }));
+    if (!errorMessage) {
+      setErrorMessage('Ничего не найдено')
+    }
   }
 
   function handleToggleCheckbox() {
@@ -56,7 +65,7 @@ function Movies() {
   }
 
   function resultMovieList() {
-    const filteredMoviesList = handleFilterCheckbox(moviesList, isChecked);
+    const filteredMoviesList = handleFilterCheckbox(currentMoviesList, isChecked);
     return filteredMoviesList.slice(0, elementCount)
   }
 
@@ -74,10 +83,11 @@ function Movies() {
         : <>
         <MoviesCardList 
           moviesList={resultMovieList()} 
-          errorMessage={errorMessage} 
+          errorMessage={errorMessage}
+          setPopupTooltipContent={setPopupTooltipContent}
         />
         <div className="movies__button-container">
-          <button className={`${handleFilterCheckbox(moviesList, isChecked).slice(elementCount).length !== 0 ? "movies__button movies__button_active" : "movies__button"}`} name="movies-button" type="button" onClick={showMore}>Ещё</button>
+          <button className={showMoreActiveClassName} name="movies-button" type="button" onClick={showMore}>Ещё</button>
         </div>
         </>}
     </section>

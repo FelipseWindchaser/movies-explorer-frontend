@@ -2,13 +2,13 @@ import './app.css';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Main from '../Main/Main';
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Movies from '../Movies/Movies';
 import SavedMovies from '../Movies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Auth/Register';
 import Login from '../Auth/Login';
-import PageNotFound from '../PageNotFound.js/PageNotFound';
+import PageNotFound from '../PageNotFound/PageNotFound';
 import Preloader from '../Preloader/Preloader';
 import { useEffect, useState } from 'react';
 import { checkToken, fetchGet } from '../../utils/MainApi';
@@ -16,12 +16,14 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { AppContext } from '../../contexts/AppContext';
 import { SavedMovieContex } from '../../contexts/SavedMovieContex'
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import PopupTooltip from '../PopupTooltip/PopupTooltip';
 
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [savedMoviesList, setSavedMoviesList] = useState([]);
+  const [popupTooltipContent, setPopupTooltipContent] = useState({});
 
   useEffect(() => {
     authorize();
@@ -30,7 +32,6 @@ function App() {
         setSavedMoviesList(res)
       })
     }
-    setCurrentUser({})
   }, [isLoggedIn])
 
   function authorize() {
@@ -51,8 +52,13 @@ function App() {
     .then(res => {
       console.log(res)
       setIsLoggedIn(false);
+      setCurrentUser({});
+      localStorage.clear();
     })
-    .catch(err => console.log(err));
+    .catch(err => setPopupTooltipContent({
+      isSuccessful: false,
+      message: err.message
+    }));
   }
 
   return (
@@ -61,6 +67,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
       <AppContext.Provider value={isLoggedIn}>
       <SavedMovieContex.Provider value={{savedMoviesList, setSavedMoviesList}}>
+        
         <div className="app">
           <Routes>
           <Route path="/" element={
@@ -74,8 +81,8 @@ function App() {
           <Route path="/movies" element={
             <>
               <Header />
-              <ProtectedRoute redirectTo="/signin">
-                <Movies />
+              <ProtectedRoute redirectTo="/">
+                <Movies setPopupTooltipContent={setPopupTooltipContent} />
               </ProtectedRoute>
               <Footer />
             </>
@@ -84,7 +91,7 @@ function App() {
           <Route path="/saved-movies" element={
             <>
               <Header />
-              <ProtectedRoute redirectTo="/signin">
+              <ProtectedRoute redirectTo="/">
                 <SavedMovies />
               </ProtectedRoute>
               <Footer />
@@ -94,7 +101,7 @@ function App() {
           <Route path="/profile" element={
             <>
               <Header />
-              <ProtectedRoute redirectTo="/signin">
+              <ProtectedRoute redirectTo="/">
                 <Profile 
                   nameLabel='Имя'
                   emailLabel='E-mail'
@@ -102,24 +109,27 @@ function App() {
                   logoutButtonText='Выйти из аккаунта'
                   setCurrentUser={setCurrentUser}
                   onClickLogout={handleLogout}
+                  setPopupTooltipContent={setPopupTooltipContent}
                 />
               </ProtectedRoute>
             </>
           }
           />
           <Route path="/signup" element={
-            <Register 
+            !isLoggedIn ? <Register 
               inputLabelText={['Имя', 'E-mail', 'Пароль']} 
               title='Добро пожаловать!' 
               buttonText='Зарегистрироваться' 
               confirmationText='Уже зарегистрированы?'
               linkText='Войти'
               errorMessage='Минимальная длина пароля: 6 символов.'
-            />
+              setIsLoggedIn={setIsLoggedIn}
+              setPopupTooltipContent={setPopupTooltipContent}
+            /> : <Navigate to="/" />
           }
           />
           <Route path="/signin" element={
-            <Login 
+            !isLoggedIn ? <Login 
               inputLabelText={['E-mail', 'Пароль']} 
               title={'Рады видеть!'}
               buttonText='Войти' 
@@ -127,19 +137,18 @@ function App() {
               linkText='Регистрация'
               errorMessage='Минимальная длина пароля: 6 символов.'
               setIsLoggedIn={setIsLoggedIn}
-            />
+              setPopupTooltipContent={setPopupTooltipContent}
+            /> : <Navigate to="/" />
           }
-          />
-          <Route
-            path="/preloader" element={
-              <Preloader/>
-            }
           />
           <Route path="*" element={
             <PageNotFound />
           }
           />
           </Routes>
+          <PopupTooltip 
+            popupContent={popupTooltipContent}
+            setPopupTooltipContent={setPopupTooltipContent} />
         </div>
       </SavedMovieContex.Provider>
       </AppContext.Provider>
