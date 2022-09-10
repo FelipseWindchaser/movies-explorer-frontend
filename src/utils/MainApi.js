@@ -1,5 +1,5 @@
-// const baseUrl = 'https://api.felipsewindchaser.nomoredomains.sbs';
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'https://api.felipsewindchaser.nomoredomains.sbs';
+// const baseUrl = 'http://localhost:3001';
 async function _checkResponse(response) {
   let data = await response.json();
   if (response.ok) {
