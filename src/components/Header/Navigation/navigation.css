@@ -16,7 +16,7 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 18px;
-  color: #000;
+  /* color: #000; */
   text-decoration: none;
   background-image: linear-gradient(currentColor, currentColor);
   background-position: 0% 100%;
@@ -40,7 +40,7 @@
   text-decoration: none;
   display: flex;
   align-items: center;
-  color: #000;
+  /* color: #000; */
   gap: 13px;
 }
 

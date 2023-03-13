@@ -41,7 +41,6 @@
   outline: none;
   padding: 0;
 }
-
 .profile__edit-button {
   background: none;
   border: none;
@@ -50,6 +49,10 @@
   font-weight: 400;
   font-size: 13px;
   line-height: 16px;
+}
+
+.profile__edit-button:hover {
+  opacity: 0.7;
 }
 .profile__signout {
   margin: 0;

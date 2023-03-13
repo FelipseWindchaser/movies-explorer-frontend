@@ -5,8 +5,24 @@
   background: #5C5C5C;
 }
 
+.header a {
+  color: #fff;
+}
+
+.header .header__icon {
+  background-color: #2BE080;
+}
+
 .header_white {
   background: #fff;
+}
+
+.header_white a {
+  color: #000;
+}
+
+.header_white .header__icon {
+  background-color: #F9F9F9;
 }
 
 .header__text-content {

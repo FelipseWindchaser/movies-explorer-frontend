@@ -1,12 +1,14 @@
 import './moviesCardList.css';
+import SavedMoviesCard from '../MoviesCard/SavedMoviesCard';
 
-
-function SavedMoviesCardList({ Component, moviesList }) {
+function SavedMoviesCardList({ moviesList }) {
   return (
+    moviesList.length === 0
+      ? 
+      <p className="moviesCardList__error-message">Нет сохраненных фильмов</p>
+      :
     <section className="moviesCardList moviesCardList_padding_bottom">
-      {moviesList.map((element, index) => {
-        return <Component key={index} isSaved={element.isSaved} />
-      })}
+      {moviesList.map((element) => <SavedMoviesCard key={element.movieId} item={element} />)}
     </section>
   );
 }

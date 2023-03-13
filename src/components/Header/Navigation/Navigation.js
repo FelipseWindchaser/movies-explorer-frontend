@@ -3,10 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import './navigation.css'
 import './menu.css';
 import icon from '../../../images/account-icon.svg';
+import iconWhite from '../../../images/account-icon_white.svg';
+import { useLocation } from 'react-router-dom';
 
 function Navigation() {
-
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const location = useLocation();
 
   function handleClick() {
     setIsOpenMenu(!isOpenMenu);
@@ -60,7 +62,7 @@ function Navigation() {
       </nav>
       <Link className="navigation__account" to="/profile">
         Аккаунт
-        <img className="header__icon" src={icon} alt="profile-logo" />
+        <img className="header__icon" src={location.pathname === "/" ? iconWhite : icon} alt="profile-logo" />
       </Link>
       </div> 
   );
